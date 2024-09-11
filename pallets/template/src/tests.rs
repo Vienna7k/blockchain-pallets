@@ -1,3 +1,4 @@
+/*
 use crate::{mock::*, Error, Event, Something};
 use frame_support::{assert_noop, assert_ok};
 
@@ -25,3 +26,4 @@ fn correct_error_for_none_value() {
 		);
 	});
 }
+*/

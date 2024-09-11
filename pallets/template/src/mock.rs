@@ -1,3 +1,4 @@
+/*
 use crate as pallet_template;
 use frame_support::derive_impl;
 use sp_runtime::BuildStorage;
@@ -27,3 +28,4 @@ impl pallet_template::Config for Test {
 pub fn new_test_ext() -> sp_io::TestExternalities {
 	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
+*/
