@@ -1,3 +1,29 @@
+# blockchain-pallets
+Esse projeto é sobre como criar um sistema para gerenciar estoque usando o framework Substrate, que faz parte do Polkadot SDK. A ideia é mostrar como fazer e integrar um pallet personalizado para controlar o estoque de produtos. No projeto, você vai encontrar um pallet chamado gerenciamento-estoque que ajuda a adicionar e remover itens do estoque. Esse pallet é integrado a um runtime Substrate, que cuida da execução e validação das transações relacionadas ao estoque.
+ 
+ ## Pré-requisitos:
+  * Rust e Cargo instalados
+   * Substrate e ferramentas associadas instaladas
+
+
+1- Clonar Repositório
+
+2- Configurar o Ambiente
+ * Instalar Dependências
+ * Instalar Dependências do Projeto (cargo build)
+
+3- Executar o Runtime
+ * Compilar o Runtime (cargo build --release)
+ * Executar o Nó Substrate (Va até a pasta onde o nó está localizado e execute "cargo run -- --dev")
+
+4- Interagir com o Pallet
+
+5- Executar Testes (cargo test)
+   
+.
+
+
+
 # Substrate Node Template
 
 A fresh [Substrate](https://substrate.io/) node, ready for hacking :rocket:
