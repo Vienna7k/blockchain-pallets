@@ -43,9 +43,9 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		LogViagem {
+		EstMercado {
 			who: T::AccountId,
-			relato: BoundedVec<u8, T::MaxLength>
+			produto: BoundedVec<u8, T::MaxLength>
 		}
 
 	}
@@ -57,31 +57,36 @@ pub mod pallet {
 		TooLong,
 	}
 
-	#[pallet::call]
-	impl<T: Config> Pallet<T> {
-		
+   #[pallet::call]
+impl<T: Config> Pallet<T> {
+    #[pallet::call_index(0)]
+    #[pallet::weight(T::WeightInfo::do_something())]
+    pub fn set_produto(origin: OriginFor<T>, nome: Vec<u8>, valor: u32) -> DispatchResult {
+        let who = ensure_signed(origin)?;
 
+        // Define status baseado no valor
+        let status = if valor > 0 {
+            b"disponivel".to_vec()
+        } else {
+            b"indisponivel".to_vec()
+        };
 
-		#[pallet::call_index(0)]
-		#[pallet::weight(T::WeightInfo::do_something())]
-		pub fn set_viagem(origin: OriginFor<T>, pais: Vec<u8>, descricao: Vec<u8>, estado: Vec<u8>) -> DispatchResult {
-			let who = ensure_signed(origin)?;
-			
-			let mut fullrelato = pais.clone();
-			fullrelato.extend_from_slice(b";");  
+        let mut fullproduto = nome.clone();
+        fullproduto.extend_from_slice(b";");
 
-    		fullrelato.extend_from_slice(&descricao);
-			fullrelato.extend_from_slice(b";"); 
+        // Remover a linha de conversão do valor para bytes
+        // let valor_bytes = valor.to_string().into_bytes();
 
-    		fullrelato.extend_from_slice(&estado);
+        // fullproduto.extend_from_slice(&valor_bytes);
+        fullproduto.extend_from_slice(b";");
 
-			let relato: BoundedVec<_, _> =
-				fullrelato.try_into().map_err(|_| Error::<T>::TooLong)?;
-			Self::deposit_event(Event::LogViagem { who, relato });
-			Ok(())
-		}
+        fullproduto.extend_from_slice(&status);
 
-
-		
-	}
+        // Tenta converter para BoundedVec e trata erro
+        let produto: BoundedVec<_, _> =
+            fullproduto.try_into().map_err(|_| Error::<T>::TooLong)?;
+        Self::deposit_event(Event::EstMercado { who, produto });
+        Ok(())
+    }
+}
 }
